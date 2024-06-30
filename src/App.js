@@ -75,11 +75,31 @@ function App() {
       console.error('Error fetching points:', error);
     }
   };
+  async function handleClick() {
+    try {
+      const response = await fetch('http://localhost:8080/delpoints', {
+        method: 'GET',
+        mode: 'cors'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Fetched points:', data);
+        setPoints(data);
+      } else {
+        console.error('Failed to fetch points');
+      }
+    } catch (error) {
+      console.error('Error fetching points:', error);
+    }
+  }
 
   return (
     <div>
       <hr />
       <div id="container" ref={containerRef}></div>
+      <div>
+        <button onClick={handleClick}>Erase board</button>
+      </div>
       <hr />
     </div>
   );
